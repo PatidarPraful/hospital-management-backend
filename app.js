@@ -34,6 +34,8 @@ app.use(fileUpload({
 }  
 ));
 
+app.set("trust proxy", 1);
+
 //routes
 app.use("/api/v1/message", messageRouter)
 app.use("/api/v1/user", userRouter)
