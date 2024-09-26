@@ -4,10 +4,19 @@ import ErrorHandler from "./errorMiddleware.js";
 import jwt from "jsonwebtoken";
 
 export const isAdminAuthenticated = catchAsyncErrors(async (req,res,next)=>{
-    const token = req.cookies.adminToken;
+    // const token = req.cookies.adminToken;
 
-    if(!token)
-        return next(new ErrorHandler("Admin Not Authenicated", 400));
+    // if(!token)
+    //     return next(new ErrorHandler("Admin Not Authenicated", 400));
+
+     const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return next(new ErrorHandler("Admin Not Authenticated", 400));
+    }
+
+    const token = authHeader.split(" ")[1]; // Extract the token after "Bearer"
+
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = await User.findById(decoded.id);
@@ -23,10 +32,19 @@ export const isAdminAuthenticated = catchAsyncErrors(async (req,res,next)=>{
 })
 
 export const isPatientAuthenticated = catchAsyncErrors(async (req,res,next)=>{
-    const token = req.cookies.patientToken;
+    // const token = req.cookies.patientToken;
 
-    if(!token)
-        return next(new ErrorHandler("Patient Not Authenicated", 400));
+    // if(!token)
+    //     return next(new ErrorHandler("Patient Not Authenicated", 400));
+
+      const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return next(new ErrorHandler("Patient Not Authenticated", 400));
+    }
+
+    const token = authHeader.split(" ")[1]; // Extract the token after "Bearer"
+
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.user = await User.findById(decoded.id);
