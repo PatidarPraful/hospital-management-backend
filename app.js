@@ -17,7 +17,6 @@ app.use(
     cors({
     origin : [process.env.FRONTEND_URI,process.env.DASHBOARD_URI],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials : true,
     optionsSuccessStatus: 200, // For legacy browser support
 })
 );
