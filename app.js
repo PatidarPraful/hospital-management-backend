@@ -13,13 +13,15 @@ const app = express();
 
 config({path : "./config/config.env"});
 
-app.use(
-    cors({
-    origin : [process.env.FRONTEND_URI,process.env.DASHBOARD_URI],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    optionsSuccessStatus: 200, // For legacy browser support
-})
-);
+// app.use(
+//     cors({
+//     origin : [process.env.FRONTEND_URI,process.env.DASHBOARD_URI],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     optionsSuccessStatus: 200, // For legacy browser support
+// })
+// );
+
+app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }));
 
 
 
